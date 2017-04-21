@@ -9,8 +9,9 @@ app.get('/', function(request, response){
 });
 
 app.get('/*', function(request, response){
-  response.redirect('/?channel=' + request.path.slice(1));
+  // response.redirect('/?channel=' + request.path.slice(1));
   // response.redirect("http://www." + request.path.slice(1) + ".com");
+  response.sendFile(path.resolve(__dirname, './public/index.html'));
 })
 
 module.exports = app;

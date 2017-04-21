@@ -13,9 +13,11 @@
   "dependencies": {
     "create-react-class": "^15.5.2",
     "express": "^4.15.2",
+    "jquery": "^3.2.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-router": "^4.1.1"
+    "react-router": "^4.1.1",
+    "webpack": "^2.4.1"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
