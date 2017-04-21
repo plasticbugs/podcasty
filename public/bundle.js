@@ -9529,8 +9529,8 @@ module.exports = __webpack_require__(19);
 var React = __webpack_require__(81);
 var ReactDOM = __webpack_require__(80);
 
-var Main = React.createClass({
-  displayName: 'Main',
+var App = React.createClass({
+  displayName: 'App',
 
   render: function render() {
     return React.createElement(
@@ -9541,7 +9541,7 @@ var Main = React.createClass({
   }
 });
 
-ReactDOM.render(React.createElement(Main, null), document.getElementById('app'));
+ReactDOM.render(React.createElement(App, null), document.getElementById('app'));
 
 /***/ }),
 /* 83 */
