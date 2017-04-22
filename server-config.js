@@ -3,6 +3,8 @@ var app = express();
 var bodyParser = require('body-parser');
 var path = require('path');
 var fs = require('fs');
+var db = require('./app/config.js');
+var video = require('./app/models/videos.js')
 
 // PULLY
 import { Pully, Presets } from 'pully';
@@ -30,6 +32,13 @@ app.post('/api', function(request, response){
   var videolist = request.body.videos;
 
   console.log("I GOT THIS: ", videolist[0].contentDetails.videoId);
+  // save all the videos into the DB
+  var newVideo = new Video({url: uri, title: title, baseUrl: req.headers.origin});
+  newLink.save(function(err) {
+    console.log('the NEW LINK object ----->', newLink);
+    res.status(200).send(newLink);
+  });
+
   response.end();
 });
 
