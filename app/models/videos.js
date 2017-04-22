@@ -6,8 +6,6 @@ var videoSchema = new Schema({
   percent:  String,
   videoid: String,
   link:   String,
-  comments: [{ body: String, date: Date }],
-  date: { type: Date, default: Date.now },
   done: Boolean
 });
 
