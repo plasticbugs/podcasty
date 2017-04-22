@@ -19,8 +19,22 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      videoList: ""
+      videoList: this.props.theList
     }
+  }
+
+  componentDidMount() {
+    setInterval(function(){
+      var result = []
+      for(var i = 0; i < this.props.theList.length; i++) {
+        this.props.theList[i].contentDetails.videoId += ":D";
+        result.push(this.props.theList[i]);
+      }
+      $.get('/api', function(data){
+        console.log(data);
+      })
+      this.setState({videoList: result});
+    }.bind(this), 3000);
   }
 
   render() {
@@ -60,6 +74,7 @@ var lookUpVideos = function (channelID, callback){
         data: {
           key: 'AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk',
           part: 'contentDetails',
+          maxResults: 10,
           playlistId: data.items[0].contentDetails.relatedPlaylists.uploads
         },
         success: function(data){

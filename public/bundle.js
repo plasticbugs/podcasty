@@ -20946,12 +20946,27 @@ var App = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      videoList: ""
+      videoList: _this.props.theList
     };
     return _this;
   }
 
   _createClass(App, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      setInterval(function () {
+        var result = [];
+        for (var i = 0; i < this.props.theList.length; i++) {
+          this.props.theList[i].contentDetails.videoId += ":D";
+          result.push(this.props.theList[i]);
+        }
+        $.get('/api', function (data) {
+          console.log(data);
+        });
+        this.setState({ videoList: result });
+      }.bind(this), 3000);
+    }
+  }, {
     key: 'render',
     value: function render() {
       return React.createElement(
@@ -20994,6 +21009,7 @@ var lookUpVideos = function lookUpVideos(channelID, callback) {
         data: {
           key: 'AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk',
           part: 'contentDetails',
+          maxResults: 10,
           playlistId: data.items[0].contentDetails.relatedPlaylists.uploads
         },
         success: function success(data) {
@@ -35305,7 +35321,7 @@ var VideoList = function VideoList(props) {
     'ul',
     { className: 'list' },
     props.channels.map(function (channel) {
-      return React.createElement(VideoEntry, { video: channel });
+      return React.createElement(VideoEntry, { video: channel, key: channel.contentDetails.videoId });
     })
   );
 };
