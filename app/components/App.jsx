@@ -29,6 +29,7 @@ class App extends React.Component {
     console.log(this.props.theList);
     var obj = {}
     obj.videos = this.props.theList;
+    obj.channel = this.props.channel;
     $.ajax({
     type: "POST",
     contentType:'application/json',
