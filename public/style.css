@@ -1,0 +1,15 @@
+.title {
+  color: #EA2E49;
+  font-family: 'Poppins', sans-serif;
+}
+
+li {
+  color: #232323;
+  font-family: 'Operator Mono', serif;
+  font-style: italic;
+  list-style: none;
+}
+
+body {
+  background-color: #FFFAF1;
+}
