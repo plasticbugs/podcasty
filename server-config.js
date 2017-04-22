@@ -6,13 +6,14 @@ var fs = require('fs');
 var db = require('./app/config.js');
 var Video = require('./app/models/videos.js');
 var Channel = require('./app/models/channels.js');
+var async = require('async');
+var _ = require('underscore');
 // PULLY
 import { Pully, Presets } from 'pully';
  
 var pully = new Pully();
  
 var pullyOptions = {
-  url: 'http://www.youtube.com/watch?v=A02s8omM_hI',
   dir: './bitbucket',
   preset: Presets.MP3,
   progress: (data) => console.log(data.percent + '%'),
@@ -31,16 +32,27 @@ app.post('/api', function(request, response){
   // var channel = request.path.search.substring(9);
   var videolist = request.body.videos;
   var channelname = request.body.channel;
-
-  Channel.findOne({title: uri}, function(err, link) {
-
-  console.log("I GOT THIS: ", videolist[0].contentDetails.videoId);
-  // save all the videos into the DB
-  var newVideo = new Video({percent: "0", videoid: videolist[0].contentDetails.videoId, done: false});
-  newVideo.save(function(err) {
-    console.log('the NEW LINK object ----->', newVideo);
-    // res.status(200).send(newLink);
-  });
+  async.each(videolist, function(video){
+    var id = video.contentDetails.videoId;
+    Video.findOne({videoid: id}, function(err, video){
+      if(video === null){
+        console.log("inside LOOP: ", id);
+        var newVideo = new Video({percent: "0", videoid: id, done: false});
+        newVideo.save(function(err) {
+          console.log('the NEW VIDEO object ----->', newVideo);
+          // res.status(200).send(newLink);
+          pullyOptions.url = 'http://www.youtube.com/watch?v=' + id;
+          _.debounce(function(){
+            pully.download(pullyOptions).then((
+              path => console.log('Downloaded to ' + path), // Path to the downloaded file
+              err => console.error(err) // Error info
+            ))
+            .then(console.log('DONE!!!'));
+          }, 500);
+        });
+      }
+    })
+  })
 
   response.end();
 });
@@ -48,11 +60,6 @@ app.post('/api', function(request, response){
 app.get('/api', function(request, response){
   
   response.send(201);
-  // pully.download(pullyOptions).then((
-  //   path => console.log('Downloaded to ' + path), // Path to the downloaded file
-  //   err => console.error(err) // Error info
-  // ))
-  // .then(console.log('DONE!!!'));
 
   // response.send('{mrpoopy: "butthole"}')
   // ytdl('http://www.youtube.com/watch?v=A02s8omM_hI', { filter: function(format) { return format.container === 'mp3'; } })
