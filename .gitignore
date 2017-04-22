@@ -15,3 +15,5 @@ Icon
 .floobit
 .floo
 .flooignore
+
+public/bundle.js
