@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.3.0",
     "babel-cli": "^6.24.1",
     "babel-preset-node6": "^11.0.0",
     "body-parser": "^1.17.1",
@@ -22,6 +23,7 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router": "^4.1.1",
+    "underscore": "^1.8.3",
     "webpack": "^2.4.1",
     "ytdl-core": "^0.13.0"
   },
