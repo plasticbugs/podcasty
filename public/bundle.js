@@ -10673,31 +10673,6 @@ var $ = __webpack_require__(207);
 //     )
 //   }
 // });
-var lookUpVideos = function lookUpVideos(channelID, callback) {
-  $.ajax({
-    url: 'https://www.googleapis.com/youtube/v3/channels',
-    method: 'GET',
-    data: {
-      key: 'AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk',
-      part: 'contentDetails',
-      forUsername: channelID
-    },
-    success: function success(data) {
-      $.ajax({
-        url: 'https://www.googleapis.com/youtube/v3/playlistItems',
-        method: 'GET',
-        data: {
-          key: 'AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk',
-          part: 'contentDetails',
-          playlistId: data.items[0].contentDetails.relatedPlaylists.uploads
-        },
-        success: function success(data) {
-          callback(data);
-        }
-      });
-    }
-  });
-};
 
 var App = function (_React$Component) {
   _inherits(App, _React$Component);
@@ -10719,17 +10694,56 @@ var App = function (_React$Component) {
       return React.createElement(
         'div',
         null,
-        lookUpVideos(this.props.channel, function (data) {
-          this.setState({ videoList: data });
-        }.bind(this))
+        this.props.theList
       );
     }
+
+    /*render() {
+      return (
+        <div>{lookUpVideos(this.props.channel, function(data){
+          this.setState({videoList: data})}.bind(this))}
+        </div>
+      )
+    }*/
+
   }]);
 
   return App;
 }(React.Component);
 
-ReactDOM.render(React.createElement(App, { channel: window.location.pathname.substring(1) }), document.getElementById('app'));
+var lookUpVideos = function lookUpVideos(channelID, callback) {
+  $.ajax({
+    url: 'https://www.googleapis.com/youtube/v3/channels',
+    method: 'GET',
+    data: {
+      key: 'AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk',
+      part: 'contentDetails',
+      forUsername: channelID
+    },
+    success: function success(data) {
+      $.ajax({
+        url: 'https://www.googleapis.com/youtube/v3/playlistItems',
+        method: 'GET',
+        data: {
+          key: 'AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk',
+          part: 'contentDetails',
+          playlistId: data.items[0].contentDetails.relatedPlaylists.uploads
+        },
+        success: function success(data) {
+          var resultsArray = [];
+          for (var i = 0; i < data.items.length; i++) {
+            resultsArray.push(data.items[i].contentDetails.videoId);
+          }
+          callback(resultsArray);
+        }
+      });
+    }
+  });
+};
+
+lookUpVideos(window.location.pathname.substring(1), function (data) {
+  ReactDOM.render(React.createElement(App, { channel: window.location.pathname.substring(1), theList: data }), document.getElementById('app'));
+});
 
 /***/ }),
 /* 93 */

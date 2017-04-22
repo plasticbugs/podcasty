@@ -11,6 +11,30 @@ var $ = require('jquery');
 //     )
 //   }
 // });
+
+class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      videoList: ""
+    }
+  }
+
+  render() {
+    return (
+      <div>{this.props.theList}</div>
+    )
+  }
+
+  /*render() {
+    return (
+      <div>{lookUpVideos(this.props.channel, function(data){
+        this.setState({videoList: data})}.bind(this))}
+      </div>
+    )
+  }*/
+}
+
 var lookUpVideos = function (channelID, callback){
   $.ajax({
     url: 'https://www.googleapis.com/youtube/v3/channels',
@@ -30,28 +54,17 @@ var lookUpVideos = function (channelID, callback){
           playlistId: data.items[0].contentDetails.relatedPlaylists.uploads
         },
         success: function(data){
-          callback(data);
+          var resultsArray = [];
+          for(var i = 0; i < data.items.length; i++) {
+            resultsArray.push(data.items[i].contentDetails.videoId);
+          }
+          callback(resultsArray);
         }
       })
     }
   })
 }
 
-class App extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      videoList: ""
-    }
-  }
-
-  render() {
-    return (
-      <div>{lookUpVideos(this.props.channel, function(data){
-        this.setState({videoList: data})}.bind(this))}
-      </div>
-    )
-  }
-}
-
-ReactDOM.render(<App channel={window.location.pathname.substring(1)}/>, document.getElementById('app'));
+lookUpVideos(window.location.pathname.substring(1), function(data){
+  ReactDOM.render(<App channel={window.location.pathname.substring(1)} theList={data}/>, document.getElementById('app'));
+});
