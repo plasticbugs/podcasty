@@ -4,8 +4,8 @@ var bodyParser = require('body-parser');
 var path = require('path');
 var fs = require('fs');
 var db = require('./app/config.js');
-var video = require('./app/models/videos.js')
-
+var Video = require('./app/models/videos.js');
+var Channel = require('./app/models/channels.js');
 // PULLY
 import { Pully, Presets } from 'pully';
  
@@ -30,13 +30,16 @@ app.get('/', function(request, response){
 app.post('/api', function(request, response){
   // var channel = request.path.search.substring(9);
   var videolist = request.body.videos;
+  var channelname = request.body.channel;
+
+  Channel.findOne({title: uri}, function(err, link) {
 
   console.log("I GOT THIS: ", videolist[0].contentDetails.videoId);
   // save all the videos into the DB
-  var newVideo = new Video({url: uri, title: title, baseUrl: req.headers.origin});
-  newLink.save(function(err) {
-    console.log('the NEW LINK object ----->', newLink);
-    res.status(200).send(newLink);
+  var newVideo = new Video({percent: "0", videoid: videolist[0].contentDetails.videoId, done: false});
+  newVideo.save(function(err) {
+    console.log('the NEW LINK object ----->', newVideo);
+    // res.status(200).send(newLink);
   });
 
   response.end();
