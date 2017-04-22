@@ -21044,6 +21044,18 @@ var App = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       console.log(this.props.theList);
+      var obj = {};
+      obj.videos = this.props.theList;
+      $.ajax({
+        type: "POST",
+        contentType: 'application/json',
+        url: '/api?channel=' + this.props.channel,
+        data: JSON.stringify(obj),
+        success: function success(data) {
+          console.log("Successful POST");
+        }
+      });
+
       // setInterval(function(){
       //   var result = []
       //   for(var i = 0; i < this.props.theList.length; i++) {

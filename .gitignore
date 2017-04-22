@@ -3,8 +3,7 @@
 .LSOverride
 iisnode.yml
 npm-debug.log
-
-db/shortly.sqlite
+db
 node_modules
 public/dist
 
