@@ -26,6 +26,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
+    console.log(this.props.theList);
     // setInterval(function(){
     //   var result = []
     //   for(var i = 0; i < this.props.theList.length; i++) {

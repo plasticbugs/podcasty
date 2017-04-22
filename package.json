@@ -11,13 +11,17 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-preset-node6": "^11.0.0",
     "create-react-class": "^15.5.2",
     "express": "^4.15.2",
     "jquery": "^3.2.1",
+    "pully": "^2.1.4",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-router": "^4.1.1",
-    "webpack": "^2.4.1"
+    "webpack": "^2.4.1",
+    "ytdl-core": "^0.13.0"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
