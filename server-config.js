@@ -32,7 +32,7 @@ var saveVideos = function(channel, array) {
         newVideo.save(function(err) {
 
           var pullyOptions = {
-            dir: './bitbucket',
+            dir: './public/bitbucket',
             preset: Presets.MP3,
             progress: function(data){
               newVideo.percent = data.percent + '%';
@@ -44,7 +44,7 @@ var saveVideos = function(channel, array) {
           console.log("inside LOOP: ", id);
           pullyOptions.url = 'http://www.youtube.com/watch?v=' + id;
           pully.download(pullyOptions).then(
-            path => console.log('Downloaded to ' + path), // Path to the downloaded file
+            place => console.log('Downloaded to ' + place.path), // Path to the downloaded file
             err => console.error(err) // Error info
           )
           .then(function(){
@@ -99,9 +99,7 @@ app.get('/', function(request, response){
 
 app.post('/api', function(request, response){
   // var channel = request.path.search.substring(9);
-  console.log(request.body.videos)
   var videolist = request.body.videos;
-  var timer = 15000;
   var channelname = request.body.channel;
 
   // for(var i = 0; i < videolist.length; i++) {
@@ -116,11 +114,10 @@ app.post('/api', function(request, response){
 
 app.get('/api', function(request, response){
   var channel = request.query.channel;
-  console.log(channel);
+
   var thingToSend = {videos:[]};
   // get all the videos with this channel out of the DB:
   Video.find({channel: channel}, function(err, videos){
-    console.log(videos);
     videos.forEach(function(video){
       var videoObj = {
         id: video.videoid,
@@ -128,7 +125,6 @@ app.get('/api', function(request, response){
         done: video.done,
         link: video.link
       };
-      console.log(videoObj);
       thingToSend.videos.push(videoObj);
     })
     response.write(JSON.stringify(thingToSend));
