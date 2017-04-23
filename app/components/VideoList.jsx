@@ -2,11 +2,11 @@ var React = require('react');
 var VideoEntry = require('./VideoEntry.jsx');
 
 var VideoList = (props) => (
-  <ul className="video-list">
-    {props.channels.map(function(channel){
-      return <VideoEntry video={channel} key={channel.contentDetails.videoId} />
+  <div className="video-list">
+    {props.videos.map(function(video){
+      return <VideoEntry video={video} key={video.snippet.resourceId.videoId} />
     })}
-  </ul>
+  </div>
 );
 
 module.exports = VideoList;
