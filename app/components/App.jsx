@@ -33,7 +33,7 @@ class App extends React.Component {
     $.ajax({
     type: "POST",
     contentType:'application/json',
-    url: '/api?channel=' + this.props.channel,
+    url: '/api?channel=' + obj.channel,
     data: JSON.stringify(obj),
     success: function(data){
         console.log("Successful POST");
@@ -84,7 +84,7 @@ class App extends React.Component {
     return (
       <div>
         <Header channel={this.props.channel}/>
-        <VideoList videos={this.props.theList} />
+        <VideoList videos={this.props.theList} channel={this.props.channel}/>
       </div>
     )
   }
