@@ -3,7 +3,7 @@ var ReactDOM = require('react-dom');
 var createReactClass = require('create-react-class');
 var Router = require('react-router');
 var $ = require('jquery');
-var lookUpVideos = require('../utils/youtubeHelper.js')
+var ytHelper = require('../utils/youtubeHelper.js')
 
 var Header = require('./Header.jsx');
 var VideoList = require('./VideoList.jsx');
@@ -57,7 +57,7 @@ class App extends React.Component {
     return (
       <div>
         <Header channel={this.props.channel}/>
-        <VideoList channels={this.props.theList} />
+        <VideoList videos={this.props.theList} />
       </div>
     )
   }
@@ -75,6 +75,6 @@ class App extends React.Component {
 }
 
 
-lookUpVideos(window.location.pathname.substring(1), function(data){
+ytHelper.lookUp(window.location.pathname.substring(1), function(data){
   ReactDOM.render(<App channel={window.location.pathname.substring(1)} theList={data}/>, document.getElementById('app'));
 });
