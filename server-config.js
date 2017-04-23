@@ -21,20 +21,22 @@ var pully = new Pully();
 // };
 // END PULLY
 
-var saveVideos = function(array) {
+var saveVideos = function(channel, array) {
   if(array.length > 0){
     var id = array[0].snippet.resourceId.videoId;
     array.shift();
     Video.findOne({videoid: id}, function(err, video){
       console.log("looking for ", id, " and got ", video)
       if(video === null){
-        var newVideo = new Video({percent: "0", videoid: id, done: false});
+        var newVideo = new Video({percent: "0%", videoid: id, done: false, channel: channel});
         newVideo.save(function(err) {
 
           var pullyOptions = {
             dir: './bitbucket',
             preset: Presets.MP3,
             progress: function(data){
+              newVideo.percent = data.percent + '%';
+              newVideo.save();
               console.log(data.percent + '%')
             }, 
             path: path.resolve(__dirname, './') // Progress reporter callback...
@@ -46,13 +48,13 @@ var saveVideos = function(array) {
             err => console.error(err) // Error info
           )
           .then(function(){
-            saveVideos(array);
+            saveVideos(channel, array);
           });
           // console.log('the NEW VIDEO object ----->', newVideo);
         //callback
         });
       } else {
-        saveVideos(array);
+        saveVideos(channel, array);
       } 
     })
   }
@@ -95,6 +97,7 @@ app.get('/', function(request, response){
 
 app.post('/api', function(request, response){
   // var channel = request.path.search.substring(9);
+  console.log(request.body.videos)
   var videolist = request.body.videos;
   var timer = 15000;
   var channelname = request.body.channel;
@@ -105,15 +108,32 @@ app.post('/api', function(request, response){
   //   });
   // }
   response.end();
-  saveVideos(videolist);
+  saveVideos(channelname, videolist);
 
 });
 
 app.get('/api', function(request, response){
-  
-  response.send(201);
+  var channel = request.query.channel;
+  console.log(channel);
+  var thingToSend = {videos:[]};
+  // get all the videos with this channel out of the DB:
+  Video.find({channel: channel}, function(err, videos){
+    console.log(videos);
+    videos.forEach(function(video){
+      var videoObj = {
+        id: video.videoid,
+        percent: video.percent,
+        done: video.done,
+        link: video.link
+      };
+      console.log(videoObj);
+      thingToSend.videos.push(videoObj);
+    })
+    response.write(JSON.stringify(thingToSend));
+    response.end();
+  });
+  // response.send(201);
 
-  // response.send('{mrpoopy: "butthole"}')
   // ytdl('http://www.youtube.com/watch?v=A02s8omM_hI', { filter: function(format) { return format.container === 'mp3'; } })
   // .pipe(fs.createWriteStream('video.mp3'));
 })
