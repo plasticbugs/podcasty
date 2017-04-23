@@ -1,5 +1,7 @@
 var $ = require('jquery');
 
+//https://www.googleapis.com/youtube/v3/playlistItems?key=AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk&part=snippet&maxResults=50&playlistId=UUR_eeue4E0jNBz8A55DOuOg
+
 var lookUpVideos = function (channelID, callback){
   $.ajax({
     url: 'https://www.googleapis.com/youtube/v3/channels',
@@ -15,7 +17,7 @@ var lookUpVideos = function (channelID, callback){
         method: 'GET',
         data: {
           key: 'AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk',
-          part: 'contentDetails',
+          part: 'snippet',
           maxResults: 10,
           playlistId: data.items[0].contentDetails.relatedPlaylists.uploads
         },
@@ -32,4 +34,4 @@ var lookUpVideos = function (channelID, callback){
   })
 }
 
-module.exports = lookUpVideos;
+exports.lookUp = lookUpVideos;
