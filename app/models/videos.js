@@ -6,7 +6,8 @@ var videoSchema = new Schema({
   percent:  String,
   videoid: String,
   link:   String,
-  done: Boolean
+  done: Boolean,
+  channel: String
 });
 
 module.exports = mongoose.model('Video', videoSchema);
