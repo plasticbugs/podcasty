@@ -17,3 +17,10 @@ body {
 h1 {
   margin-left: 20px;
 }
+
+.video-list {
+  color: #232323;
+  font-family: 'Operator Mono', serif;
+  font-style: italic;
+  margin-left: 25px;
+}
