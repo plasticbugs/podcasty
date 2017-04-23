@@ -40,6 +40,30 @@ class App extends React.Component {
       }
     });
 
+//    Every 10 seconds, poll the server and check to see the upload switch
+
+    setInterval(function(){
+      $.ajax({
+        url: '/api?channel=' + this.props.channel,
+        method: 'GET',
+        contentType: 'application/json',
+        success: function(data){
+          var data = JSON.parse(data);
+          for(var i = 0; i < this.props.theList; i++){
+            for (var j = 0; j < data.videos.length; j++) {
+              
+            }
+          }
+          data.videos.forEach(function(video) {
+            
+          });
+          console.log(JSON.parse(data).videos);
+          // videos.forEach(function(video) {
+          //   console.log(data);
+          // });
+        }
+      });
+    }.bind(this), 2000);
     // setInterval(function(){
     //   var result = []
     //   for(var i = 0; i < this.props.theList.length; i++) {
