@@ -24,6 +24,7 @@ var lookUpVideos = function (channelID, callback){
         success: function(data){
           var resultsArray = [];
           for(var i = 0; i < data.items.length; i++) {
+            data.items[i].percentage = "0%"
             resultsArray.push(data.items[i]);
           }
           console.log(resultsArray);
