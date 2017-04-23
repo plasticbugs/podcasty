@@ -66,7 +66,7 @@ class App extends React.Component {
           // });
         }
       });
-    }.bind(this), 1000);
+    }.bind(this), 200);
     // setInterval(function(){
     //   var result = []
     //   for(var i = 0; i < this.props.theList.length; i++) {
