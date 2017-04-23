@@ -5,21 +5,86 @@ var path = require('path');
 var fs = require('fs');
 var db = require('./app/config.js');
 var Video = require('./app/models/videos.js');
-var Channel = require('./app/models/channels.js');
 var async = require('async');
 var _ = require('underscore');
+var Promise = require('bluebird');
 // PULLY
 import { Pully, Presets } from 'pully';
  
 var pully = new Pully();
  
-var pullyOptions = {
-  dir: './bitbucket',
-  preset: Presets.MP3,
-  progress: (data) => console.log(data.percent + '%'),
-  path: path.resolve(__dirname, './') // Progress reporter callback...
-};
+// var pullyOptions = {
+//   dir: './bitbucket',
+//   preset: Presets.MP3,
+//   progress: (data) => console.log(data.percent + '%'),
+//   path: path.resolve(__dirname, './') // Progress reporter callback...
+// };
 // END PULLY
+
+var saveVideos = function(array) {
+  if(array.length > 0){
+    var id = array[0].snippet.resourceId.videoId;
+    array.shift();
+    Video.findOne({videoid: id}, function(err, video){
+      console.log("looking for ", id, " and got ", video)
+      if(video === null){
+        var newVideo = new Video({percent: "0", videoid: id, done: false});
+        newVideo.save(function(err) {
+
+          var pullyOptions = {
+            dir: './bitbucket',
+            preset: Presets.MP3,
+            progress: function(data){
+              console.log(data.percent + '%')
+            }, 
+            path: path.resolve(__dirname, './') // Progress reporter callback...
+          };
+          console.log("inside LOOP: ", id);
+          pullyOptions.url = 'http://www.youtube.com/watch?v=' + id;
+          pully.download(pullyOptions).then(
+            path => console.log('Downloaded to ' + path), // Path to the downloaded file
+            err => console.error(err) // Error info
+          )
+          .then(function(){
+            saveVideos(array);
+          });
+          // console.log('the NEW VIDEO object ----->', newVideo);
+        //callback
+        });
+      } else {
+        saveVideos(array);
+      } 
+    })
+  }
+  return;
+}
+
+// var saveVideos = function(array) {
+//   if(array.length > 0){
+//     var id = array[0].contentDetails.videoId;
+//     array.shift();
+//     Video.findOne({videoid: id}, function(err, video){
+//       if(video === null){
+
+//         console.log("inside LOOP: ", id);
+//         pullyOptions.url = 'http://www.youtube.com/watch?v=' + id;
+//         pully.download(pullyOptions).then(
+//           path => console.log('Downloaded to ' + path), // Path to the downloaded file
+//           err => console.error(err) // Error info
+//         )
+//         .then(function(){
+//           var newVideo = new Video({percent: "0", videoid: id, done: false});
+//           newVideo.save(function(err) {
+//             // console.log('the NEW VIDEO object ----->', newVideo);
+//             saveVideos(array);
+//           //callback
+//           });
+//         });
+//       } 
+//     })
+//   }
+//   return;
+// }
 
 app.use(express.static('public'));
 app.use(bodyParser.json()); // for parsing application/json
@@ -31,30 +96,17 @@ app.get('/', function(request, response){
 app.post('/api', function(request, response){
   // var channel = request.path.search.substring(9);
   var videolist = request.body.videos;
+  var timer = 15000;
   var channelname = request.body.channel;
-  async.each(videolist, function(video){
-    var id = video.contentDetails.videoId;
-    Video.findOne({videoid: id}, function(err, video){
-      if(video === null){
-        console.log("inside LOOP: ", id);
-        var newVideo = new Video({percent: "0", videoid: id, done: false});
-        newVideo.save(function(err) {
-          console.log('the NEW VIDEO object ----->', newVideo);
-          // res.status(200).send(newLink);
-          pullyOptions.url = 'http://www.youtube.com/watch?v=' + id;
-          _.debounce(function(){
-            pully.download(pullyOptions).then((
-              path => console.log('Downloaded to ' + path), // Path to the downloaded file
-              err => console.error(err) // Error info
-            ))
-            .then(console.log('DONE!!!'));
-          }, 500);
-        });
-      }
-    })
-  })
 
+  // for(var i = 0; i < videolist.length; i++) {
+  //   saveVideos(videolist[i], function(video){
+  //     console.log("SAVED THIS: ", video);
+  //   });
+  // }
   response.end();
+  saveVideos(videolist);
+
 });
 
 app.get('/api', function(request, response){
