@@ -4,9 +4,9 @@ var DownloadButton = require('./DownloadButton.jsx');
 
 function VideoEntry(props) {
   if(props.video.percent === "100%") {
-    return <div>{props.video.snippet.title}<DownloadButton link={props.video.snippet.resourceId.videoId} channel={props.channel} /></div>
+    return <div className="vid-entry">{props.video.snippet.title}<DownloadButton link={props.video.snippet.resourceId.videoId} channel={props.channel} /></div>
   } else {
-    return <div>{props.video.snippet.title}<Percent total={props.video.percent} /></div>
+    return <div className="vid-entry">{props.video.snippet.title}<Percent total={props.video.percent} /></div>
   }
 };
   // const isLoggedIn = props.isLoggedIn;
