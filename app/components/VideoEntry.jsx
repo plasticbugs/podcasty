@@ -1,7 +1,7 @@
 var React = require('react');
 
 var VideoEntry = (props) => (
-  <li>{props.video.contentDetails.videoId}</li>
+  <div>{props.video.snippet.title}</div>
 );
 
 module.exports = VideoEntry;
