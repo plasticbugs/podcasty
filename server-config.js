@@ -48,6 +48,8 @@ var saveVideos = function(channel, array) {
             err => console.error(err) // Error info
           )
           .then(function(){
+            newVideo.done = true;
+            newVideo.save();
             saveVideos(channel, array);
           });
           // console.log('the NEW VIDEO object ----->', newVideo);
