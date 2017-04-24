@@ -1,19 +1,23 @@
+var RSS = require('rss');
 var $ = require('jquery');
 
-//https://www.googleapis.com/youtube/v3/playlistItems?key=AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk&part=snippet&maxResults=50&playlistId=UUR_eeue4E0jNBz8A55DOuOg
+var generateRSS = function(channelName, uploads){
+  var theData = {};
 
-var lookUpVideos = function (channelID, callback){
-  var uploads;
   $.ajax({
     url: 'https://www.googleapis.com/youtube/v3/channels',
     method: 'GET',
     data: {
       key: 'AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk',
       part: 'contentDetails',
-      forUsername: channelID
+      forUsername: channelName
     },
     success: function(data){
-      uploads = data.items[0].contentDetails.relatedPlaylists.uploads;
+      data = data.items[0].snippet;
+      theData.title = data.title;
+      theData.description = data.description;
+      theData.url = 'http://www.youtube.com/c/' + data.customUrl;
+      theData.image = data.thumbnails.high.url;
       $.ajax({
         url: 'https://www.googleapis.com/youtube/v3/playlistItems',
         method: 'GET',
@@ -21,7 +25,7 @@ var lookUpVideos = function (channelID, callback){
           key: 'AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk',
           part: 'snippet',
           maxResults: 10,
-          playlistId: data.items[0].contentDetails.relatedPlaylists.uploads
+          playlistId: uploads
         },
         success: function(data){
           var resultsArray = [];
@@ -31,11 +35,14 @@ var lookUpVideos = function (channelID, callback){
             resultsArray.push(data.items[i]);
           }
           console.log(resultsArray);
-          callback(resultsArray, uploads);
+          callback(resultsArray);
         }
       })
     }
-  })
+    });
+
+    var feed = new RSS(feedOptions);
+
 }
 
-exports.lookUp = lookUpVideos;
+exports.generateRSS = generateRSS;

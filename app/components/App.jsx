@@ -21,7 +21,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       videoList: this.props.theList,
-      channel: this.props.channel
+      channel: this.props.channel,
+      uploads: null
     }
   }
 
@@ -83,8 +84,8 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header channel={this.props.channel}/>
-        <VideoList videos={this.props.theList} channel={this.props.channel}/>
+        <Header channel={this.props.channel} uploads={this.props.uploads} />
+        <VideoList videos={this.props.theList} channel={this.props.channel} />
       </div>
     )
   }
@@ -102,6 +103,7 @@ class App extends React.Component {
 }
 
 
-ytHelper.lookUp(window.location.pathname.substring(1), function(data){
-  ReactDOM.render(<App channel={window.location.pathname.substring(1)} theList={data}/>, document.getElementById('app'));
+ytHelper.lookUp(window.location.pathname.substring(1), function(data, uploads){
+
+  ReactDOM.render(<App channel={window.location.pathname.substring(1)} theList={data} uploads={uploads}/>, document.getElementById('app'));
 });

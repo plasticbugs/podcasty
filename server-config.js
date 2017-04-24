@@ -8,6 +8,10 @@ var Video = require('./app/models/videos.js');
 var async = require('async');
 var _ = require('underscore');
 var Promise = require('bluebird');
+var builder = require('xmlbuilder');
+var rss = require('./app/utils/feedGen.js');
+
+
 // PULLY
 import { Pully, Presets } from 'pully';
  
@@ -112,6 +116,14 @@ app.post('/api', function(request, response){
 
 });
 
+app.get('/feed', function(request, response){
+  var uploads = request.query.uploads;
+  var channel = request.query.channel;
+  console.log('channel & uploads', uploads, channel);
+  
+
+})
+
 app.get('/api', function(request, response){
   var channel = request.query.channel;
 
@@ -141,5 +153,13 @@ app.get('/*', function(request, response){
   // response.redirect("http://www." + request.path.slice(1) + ".com");
   response.sendFile(path.resolve(__dirname, './public/index.html'));
 })
+
+
+
+
+
+
+
+
 
 module.exports = app;
