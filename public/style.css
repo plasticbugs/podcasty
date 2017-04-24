@@ -90,8 +90,11 @@ img {
   color: #ff16cf;
 }
 
+.feed:hover {
+  color: #2e7dea;
+}
+
 .fa {
   margin-left: 20px;
   margin-right: 3px;
-  color: #ff16cf;
 }
