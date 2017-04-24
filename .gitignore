@@ -6,6 +6,7 @@ npm-debug.log
 db
 node_modules
 public/dist
+config.js
 
 # Icon must ends with two \r.
 Icon

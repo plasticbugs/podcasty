@@ -1,5 +1,6 @@
 var RSS = require('rss');
 var najax = require('najax');
+var keys = require('../../config.js');
 
 var generateRSS = function(channelName, uploads, callback){
   var theData = {};
@@ -8,7 +9,7 @@ var generateRSS = function(channelName, uploads, callback){
     url: 'https://www.googleapis.com/youtube/v3/channels',
     method: 'GET',
     data: {
-      key: 'AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk',
+      key: keys.YT_API_KEY,
       part: 'snippet',
       forUsername: channelName
     },
@@ -23,7 +24,7 @@ var generateRSS = function(channelName, uploads, callback){
         url: 'https://www.googleapis.com/youtube/v3/playlistItems',
         method: 'GET',
         data: {
-          key: 'AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk',
+          key: keys.YT_API_KEY,
           part: 'snippet',
           maxResults: 10,
           playlistId: uploads

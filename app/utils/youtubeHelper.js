@@ -1,4 +1,5 @@
 var $ = require('jquery');
+var keys = require('../../config.js')
 
 //https://www.googleapis.com/youtube/v3/playlistItems?key=AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk&part=snippet&maxResults=50&playlistId=UUR_eeue4E0jNBz8A55DOuOg
 
@@ -8,7 +9,7 @@ var lookUpVideos = function (channelID, callback){
     url: 'https://www.googleapis.com/youtube/v3/channels',
     method: 'GET',
     data: {
-      key: 'AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk',
+      key: keys.YT_API_KEY,
       part: 'contentDetails',
       forUsername: channelID
     },
@@ -18,7 +19,7 @@ var lookUpVideos = function (channelID, callback){
         url: 'https://www.googleapis.com/youtube/v3/playlistItems',
         method: 'GET',
         data: {
-          key: 'AIzaSyDWPzFJNjsUEfmz5NKoGNP3PHWGrRXxpRk',
+          key: keys.YT_API_KEY,
           part: 'snippet',
           maxResults: 10,
           playlistId: data.items[0].contentDetails.relatedPlaylists.uploads
