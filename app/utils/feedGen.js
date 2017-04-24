@@ -13,7 +13,6 @@ var generateRSS = function(channelName, uploads, callback){
       forUsername: channelName
     },
     success: function(data){
-      console.log(data);
       data = JSON.parse(data);
       data = data.items[0].snippet;
       theData.title = data.title;
@@ -57,6 +56,7 @@ var generateRSS = function(channelName, uploads, callback){
             feed.item({
               title: snippet.title,
               description: snippet.description,
+              date: snippet.publishedAt,
               enclosure: {url:'http://127.0.0.1:3000/bitbucket/' + snippet.resourceId.videoId + "__.mp3"},
               custom_elements: [
                 {'itunes:image': {

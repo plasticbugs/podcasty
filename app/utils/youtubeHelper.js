@@ -30,7 +30,6 @@ var lookUpVideos = function (channelID, callback){
             data.items[i].done = false;
             resultsArray.push(data.items[i]);
           }
-          console.log(resultsArray);
           callback(resultsArray, uploads);
         }
       })

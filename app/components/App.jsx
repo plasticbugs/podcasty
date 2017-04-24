@@ -27,7 +27,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log(this.props.theList);
     var obj = {}
     obj.videos = this.props.theList;
     obj.channel = this.props.channel;
