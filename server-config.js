@@ -120,6 +120,7 @@ app.get('/feed', function(request, response){
   var uploads = request.query.uploads;
   var channel = request.query.channel;
   console.log('channel & uploads', uploads, channel);
+  response.contentType('text/xml')
   response.send(rss.generateRSS(channel,uploads));
 
 })
