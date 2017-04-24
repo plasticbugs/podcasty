@@ -87,6 +87,11 @@ img {
 }
 
 .feed {
+  color: #ff16cf;
+}
+
+.fa {
   margin-left: 20px;
+  margin-right: 3px;
   color: #ff16cf;
 }
