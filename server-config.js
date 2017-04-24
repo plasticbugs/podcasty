@@ -121,8 +121,9 @@ app.get('/feed', function(request, response){
   var channel = request.query.channel;
   console.log('channel & uploads', uploads, channel);
   response.contentType('text/xml')
-  response.send(rss.generateRSS(channel,uploads));
-
+  rss.generateRSS(channel,uploads, function(rssData){
+    response.send(rssData);
+  });
 })
 
 app.get('/api', function(request, response){
