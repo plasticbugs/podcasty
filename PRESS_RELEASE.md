@@ -1,4 +1,4 @@
-# Project Name #
+# Podcasty - YouTube to Podcast Feed #
 
 <!-- 
 > This material was originally posted [here](http://www.quora.com/What-is-Amazons-approach-to-product-development-and-product-management). It is reproduced here for posterities sake.
@@ -16,11 +16,11 @@ Oh, and I also like to write press-releases in what I call "Oprah-speak" for mai
 Once the project moves into development, the press release can be used as a touchstone; a guiding light. The product team can ask themselves, "Are we building what is in the press release?" If they find they're spending time building things that aren't in the press release (overbuilding), they need to ask themselves why. This keeps product development focused on achieving the customer benefits and not building extraneous stuff that takes longer to build, takes resources to maintain, and doesn't provide real customer benefit (at least not enough to warrant inclusion in the press release).
  -->
  
-## Heading ##
-  > YouTube Podcast Generator
+## What is this? ##
+  > A YouTube Podcast Generator
 
-## Sub-Heading ##
-  > For people who want to turn their favorite YouTube channels into audio podcasts
+## Why would I need such a thing? ##
+  > It's for people who want to turn their favorite YouTube channels into audio podcasts
 
 ## Summary ##
   > The YPG turns YouTube channels into MP3s that you can listen to on the go through your favorite podcast application. Visit ypg.com/youtube_channel_name and, if the channel hasn't yet been podcastified, YPG will fetch all the latest videos and begin turning them into MP3s. When the files are finished, you can visit ypg.com/youtube_channel_name/feed to get an RSS feed of MP3s.
@@ -28,17 +28,17 @@ Once the project moves into development, the press release can be used as a touc
 ## Problem ##
   > Some YouTube channels would work well as an audio podcast. This tool also gives YouTube creators the ability to automatically turn their channel's content into an audio podcast.
 
-## Solution ##
+## How it works ##
   > YPG quickly and easily lets users create new podcast feeds by simply entering the channel name of their YouTube favorite channel.
 
 ## Quote from You ##
   > When you absolutely need to podcastify a YouTube channel, YPG might be able to do the thing.
 
 ## How to Get Started ##
-  > Just visit ypg.com/ [insert your channel name here] and come back in a few minutes to grab the RSS feed.
+  > Just visit ypg.com/ [insert your channel name here] and copy the RSS feed, and paste the link into your favorite podcatcher.
 
 ## Customer Quote ##
-  > "I love listenting to my favorite YouTube channels during my commute" - John from Kalamazoo
+  > "I love listenting to my favorite YouTube channels during my commute" - John D.
 
 ## Closing and Call to Action ##
-  > Got to YPG.com to get all the info on how to make a podcast out of a YouTube channel.
+  > Visit the site and grab a podcast feed for your YouTube channel.
