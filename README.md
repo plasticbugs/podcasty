@@ -29,7 +29,11 @@ npm install
 
 ## Running the App
 
-To run your redis server (for XML caching): `redis-server`
+Get a developer key from Google and obtain credentials so you can access the YouTube Data API. [Instructions here](https://developers.google.com/youtube/v3/getting-started)
+
+Rename `\example.config.js` to `config.js` and add your API Key from the [Google Developer Console](https://console.developers.google.com/)
+
+To run your Redis server (for XML caching): `redis-server`
 
 To run MongoDB: `mongod`
 
