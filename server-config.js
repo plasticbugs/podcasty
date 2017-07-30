@@ -10,10 +10,14 @@ var _ = require('underscore');
 var Promise = require('bluebird');
 var builder = require('xmlbuilder');
 var rss = require('./app/utils/feedGen.js');
-
+var redis = require("redis");
+var client = redis.createClient();
+var cache = require('express-redis-cache')({expire: 3600});
 
 // PULLY
-import { Pully, Presets } from 'pully';
+var pullyLib = require('pully')
+var Pully = pullyLib.Pully;
+var Presets = pullyLib.Presets
  
 var pully = new Pully();
  
@@ -26,12 +30,16 @@ var pully = new Pully();
 // END PULLY
 
 var saveVideos = function(channel, array) {
-  if(array.length > 0){
+  if(array.length > 0) {
     var id = array[0].snippet.resourceId.videoId;
     array.shift();
     Video.findOne({videoid: id}, function(err, video){
       console.log("looking for ", id, " and got ", video)
-      if(video === null){
+      if (video && video.percent !== '100%') {
+        video.remove();
+        video = null;
+      }
+      if (video === null) {
         var newVideo = new Video({percent: "0%", videoid: id, done: false, channel: channel});
         newVideo.save(function(err) {
 
@@ -54,13 +62,13 @@ var saveVideos = function(channel, array) {
           .then(function(){
             newVideo.done = true;
             newVideo.save();
-            saveVideos(channel, array);
+            return saveVideos(channel, array);
           });
           // console.log('the NEW VIDEO object ----->', newVideo);
         //callback
         });
       } else {
-        saveVideos(channel, array);
+        return saveVideos(channel, array);
       } 
     })
   }
@@ -97,11 +105,12 @@ var saveVideos = function(channel, array) {
 app.use(express.static('public'));
 app.use(bodyParser.json()); // for parsing application/json
 
-app.get('/', function(request, response){
+app.get('/', function(request, response) {
+
   response.sendFile(path.resolve(__dirname, './public/index.html'));
 });
 
-app.post('/api', function(request, response){
+app.post('/api', function(request, response) {
   // var channel = request.path.search.substring(9);
   var videolist = request.body.videos;
   var channelname = request.body.channel;
@@ -116,12 +125,13 @@ app.post('/api', function(request, response){
 
 });
 
-app.get('/feed', function(request, response){
+app.get('/feed',cache.route(), function(request, response) {
   var uploads = request.query.uploads;
   var channel = request.query.channel;
   console.log('channel & uploads', uploads, channel);
   response.contentType('text/xml')
-  rss.generateRSS(channel,uploads, function(rssData){
+  rss.generateRSS(channel,uploads, function(rssData) {
+    console.log("doing fresh")
     response.send(rssData);
   });
 })
@@ -131,7 +141,7 @@ app.get('/api', function(request, response){
 
   var thingToSend = {videos:[]};
   // get all the videos with this channel out of the DB:
-  Video.find({channel: channel}, function(err, videos){
+  Video.find({channel: channel}, function(err, videos) {
     videos.forEach(function(video){
       var videoObj = {
         id: video.videoid,
@@ -150,7 +160,7 @@ app.get('/api', function(request, response){
   // .pipe(fs.createWriteStream('video.mp3'));
 })
 
-app.get('/*', function(request, response){
+app.get('/*', function(request, response) {
   // response.redirect('/?channel=' + request.path.slice(1));
   // response.redirect("http://www." + request.path.slice(1) + ".com");
   response.sendFile(path.resolve(__dirname, './public/index.html'));
