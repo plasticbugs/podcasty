@@ -75,33 +75,6 @@ var saveVideos = function(channel, array) {
   return;
 }
 
-// var saveVideos = function(array) {
-//   if(array.length > 0){
-//     var id = array[0].contentDetails.videoId;
-//     array.shift();
-//     Video.findOne({videoid: id}, function(err, video){
-//       if(video === null){
-
-//         console.log("inside LOOP: ", id);
-//         pullyOptions.url = 'http://www.youtube.com/watch?v=' + id;
-//         pully.download(pullyOptions).then(
-//           path => console.log('Downloaded to ' + path), // Path to the downloaded file
-//           err => console.error(err) // Error info
-//         )
-//         .then(function(){
-//           var newVideo = new Video({percent: "0", videoid: id, done: false});
-//           newVideo.save(function(err) {
-//             // console.log('the NEW VIDEO object ----->', newVideo);
-//             saveVideos(array);
-//           //callback
-//           });
-//         });
-//       } 
-//     })
-//   }
-//   return;
-// }
-
 app.use(express.static('public'));
 app.use(bodyParser.json()); // for parsing application/json
 
@@ -165,13 +138,5 @@ app.get('/*', function(request, response) {
   // response.redirect("http://www." + request.path.slice(1) + ".com");
   response.sendFile(path.resolve(__dirname, './public/index.html'));
 })
-
-
-
-
-
-
-
-
 
 module.exports = app;
