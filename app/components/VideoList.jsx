@@ -1,10 +1,14 @@
-var React = require('react');
-var VideoEntry = require('./VideoEntry.jsx');
+import React from 'react';
+import VideoEntry from './VideoEntry.jsx';
 
-var VideoList = (props) => (
+const VideoList = (props) => (
   <div className="video-list">
-    {props.videos.map(function(video){
-      return <VideoEntry video={video} key={video.snippet.resourceId.videoId} channel={props.channel}/>
+    {props.videos.map( function(video) {
+      return < VideoEntry
+              video={video}
+              key={video.snippet.resourceId.videoId}
+              channel={props.channel}
+              />
     })}
   </div>
 );
