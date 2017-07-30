@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon ./node_modules/babel-cli/bin/babel-node.js --presets node6 ./server.js",
+    "start": "webpack && nodemon ./node_modules/babel-cli/bin/babel-node.js --presets node6 ./server.js",
     "build": "webpack -w"
   },
   "author": "",
