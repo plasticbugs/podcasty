@@ -45,6 +45,7 @@ var saveVideos = function(channel, array) {
 
           var pullyOptions = {
             dir: './public/bitbucket',
+            template: '${id}',
             preset: Presets.MP3,
             progress: function(data){
               newVideo.percent = data.percent + '%';
