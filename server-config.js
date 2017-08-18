@@ -10,7 +10,7 @@ var _ = require('underscore');
 var Promise = require('bluebird');
 var builder = require('xmlbuilder');
 var rss = require('./app/utils/feedGen.js');
-var redis = require("redis");
+var redis = require('redis');
 var client = redis.createClient();
 var cache = require('express-redis-cache')({expire: 3600});
 

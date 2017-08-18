@@ -60,7 +60,7 @@ var generateRSS = function(channelName, uploads, callback){
               title: snippet.title,
               description: snippet.description,
               date: snippet.publishedAt,
-              enclosure: {url:'http://127.0.0.1:3000/bitbucket/' + snippet.resourceId.videoId + "__.mp3"},
+              enclosure: {url:'http://127.0.0.1:3000/bitbucket/' + snippet.resourceId.videoId + ".mp3"},
               custom_elements: [
                 {'itunes:image': {
                   _attr: {
