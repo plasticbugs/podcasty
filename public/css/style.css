@@ -5,13 +5,13 @@
 }
 
 #logo {
-  color: #EA2E49;
+  color: #efefef;
   font-family: 'Poppins', sans-serif;
   letter-spacing: -2px;
-  margin-left: 20px;
-  margin-top: 20px;
+  padding: 15px 20px 20px 20px;
   font-size: 3em;
   margin-bottom: -20px;
+  background-color: #E91E63;
 }
 
 a {
@@ -34,35 +34,38 @@ body {
   background-color: #FFFAF1;
 }
 
-h1 {
-  margin-left: 20px;
-  margin-bottom: 0px;
+.channel-title {
+  margin: 30px 20px 15px 20px;
   padding-bottom: 0px;
+  font-size: 3em;
+  letter-spacing: -2px;
 }
 
 .video-list {
   color: #232323;
   font-family: 'Roboto Slab', serif;
   margin-left: 20px;
+  width: 80%;
 }
 
 .vid-entry {
-  margin-bottom: 10px;
+  border-top: solid 1px #e2e2e2;
+  border-left: solid 1px #e2e2e2;
+  border-right: solid 1px #e2e2e2;
+  padding: 10px;
+  background: #fdfdfe;
 }
 
-img {
-  border: solid 1px black;
-  margin-bottom: -3px;
-  margin-right: 8px;
+.vid-entry:last-child {
+  border-bottom: solid 1px #e2e2e2;
 }
 
 .button {
-  background-color: #ff16cf;
+  background-color: #03A9F4;
   padding: 2px 4px 3px 4px;
-  display: inline-block;
-  font-size: 10px;
-  margin-top: 3px;
-  margin-bottom: 10px;
+  font-size: 1em;
+  float: right;
+  
 }
 
 .button:hover a{
@@ -97,4 +100,15 @@ img {
 .fa {
   margin-left: 20px;
   margin-right: 3px;
+}
+
+.thumb-container {
+  overflow: hidden;
+  width: 60px;
+  height: 33px;
+  padding: 0px;
+}
+
+.thumb-container > img {
+  margin-top: -6px;
 }
