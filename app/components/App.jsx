@@ -17,7 +17,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    var obj = {}
+    var obj = {};
     obj.videos = this.props.theList;
     obj.channel = this.props.channel;
     axios.post('/api?channel=' + obj.channel, obj)
