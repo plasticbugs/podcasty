@@ -1,6 +1,12 @@
 var React = require('react');
 var DownloadButton = (props) => (
-  <div className="button-cont"><span className="button"><a href={"/bitbucket/" + props.link + ".mp3"}>Download!</a></span></div>
+  <div className="button-cont">
+    <span className="button">
+      <a href={"/bitbucket/" + props.link + ".mp3"}>
+        Download!
+      </a>
+    </span>
+  </div>
 );
 
 module.exports = DownloadButton;
