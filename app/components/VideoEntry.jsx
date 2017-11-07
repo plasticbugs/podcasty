@@ -6,10 +6,12 @@ function VideoEntry(props) {
   if(props.video.percent === "100%") {
     return (<div className="vid-entry">
         <DownloadButton link={props.video.snippet.resourceId.videoId} channel={props.channel} />
+        <div className="video-title">
+          {props.video.snippet.title}
+        </div>
         <div className="thumb-container">
           <img src={props.video.snippet.thumbnails.default.url} width="60" height="45"/>
         </div>
-        {props.video.snippet.title}
       </div>
     );
   } else {

@@ -107,8 +107,13 @@ body {
   width: 60px;
   height: 33px;
   padding: 0px;
+  margin-top: 10px;
 }
 
 .thumb-container > img {
   margin-top: -6px;
+}
+
+.video-title {
+  font-size: .9em;
 }
