@@ -3,7 +3,7 @@
 A podcast & MP3 generator for YouTube that creates iTunes-friendly XML podcast feeds with enclosures from YouTube channels.
 
 ## Demo
-![Podcast Demo gif](https://raw.githubusercontent.com/plasticbugs/podcasty/master/demo.gif)
+![Podcast Demo gif](https://raw.githubusercontent.com/plasticbugs/podcasty/master/demo.png)
 
 ### Features
 * Transcodes YouTube videos into MP3s via FFmpeg
