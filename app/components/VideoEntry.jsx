@@ -15,7 +15,17 @@ function VideoEntry(props) {
       </div>
     );
   } else {
-    return <div className="vid-entry"><img src={props.video.snippet.thumbnails.default.url} width='32' height='18'/>{props.video.snippet.title}<Percent total={props.video.percent} /></div>
+    return (
+      <div className="vid-entry">
+        <Percent total={props.video.percent} />
+        <div className="video-title">
+          {props.video.snippet.title}
+        </div>
+        <div className="thumb-container">
+          <img src={props.video.snippet.thumbnails.default.url} width='60' height='45'/>
+        </div>
+      </div>
+    );
   }
 };
   // const isLoggedIn = props.isLoggedIn;

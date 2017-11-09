@@ -81,12 +81,12 @@ body {
 
 .percent {
   color: white;
-  background-color: #ff16cf;
+  /* background-color: #ff16cf;
   padding: 2px 4px 3px 4px;
   display: inline-block;
   font-size: 10px;
   margin-top: 3px;
-  margin-bottom: 10px;
+  margin-bottom: 10px; */
 }
 
 .feed {
