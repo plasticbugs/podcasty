@@ -55,17 +55,6 @@ class App extends React.Component {
       </div>
     )
   }
-
-        // {this.props.theList.map(function(element){
-        //   return <li>element.contentDetails.videoId</li>
-        // })}
-  /*render() {
-    return (
-      <div>{lookUpVideos(this.props.channel, function(data){
-        this.setState({videoList: data})}.bind(this))}
-      </div>
-    )
-  }*/
 }
 
 
