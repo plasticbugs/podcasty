@@ -1,4 +1,4 @@
-# Podcasty
+# Podcast Machine
 
 A podcast & MP3 generator for YouTube that creates iTunes-friendly XML podcast feeds with enclosures from YouTube channels.
 
