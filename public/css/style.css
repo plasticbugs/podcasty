@@ -19,10 +19,6 @@ a {
   text-decoration: none;
 }
 
-/*a:hover {
-  color: #ff16cf;
-}*/
-
 li {
   color: #232323;
   font-family: 'Operator Mono', serif;
@@ -69,26 +65,34 @@ body {
   
 }
 
-.button:hover a{
-  background-color: white;
-  color: #ff16cf;
+.button a:hover {
+  color: #03A9F4;
 }
 
 .button:hover {
   background-color: white;
-  outline: 1px solid #ff16cf;
+  color: #03A9F4;
+  outline: 1px solid #03A9F4;
   outline-offset: 1px;
 }
 
-.percent {
-  color: white;
-  /* background-color: #ff16cf;
-  padding: 2px 4px 3px 4px;
-  display: inline-block;
-  font-size: 10px;
-  margin-top: 3px;
-  margin-bottom: 10px; */
+.button:hover > a {
+  color: #03A9F4;
 }
+
+/* .button:hover { */
+  /* background-color: white; */
+
+.percent {
+  background-color: #03A9F4;
+  padding: 2px 4px 3px 4px;
+  font-size: 1em;
+  float: right;
+  margin-left: 10px;
+
+  color: white;
+  background-color: #ff16cf;
+} 
 
 .feed {
   color: #ff16cf;
