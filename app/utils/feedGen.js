@@ -1,6 +1,6 @@
-var RSS = require('rss');
+const RSS = require('rss');
 const axios = require('axios');
-var keys = require('../../config.js');
+const keys = require('../../config.js');
 
 const buildRSS = (payload, responseData) => {
   return new RSS({

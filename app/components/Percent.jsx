@@ -1,5 +1,5 @@
-var React = require('react');
-var Percent = (props) => (
+const React = require('react');
+const Percent = (props) => (
   <div><span className="percent">{props.total}</span></div>
 );
 

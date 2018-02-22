@@ -1,5 +1,5 @@
-var React = require('react');
-var Header = (props) => (
+const React = require('react');
+const Header = (props) => (
   <div className="title">
     <h1 className="channel-title ">{props.channel}</h1>
     <a 

@@ -1,8 +1,7 @@
 const axios = require('axios');
-var keys = require('../../config.js')
+const keys = require('../../config.js')
 
-var lookUpVideos = function (channelID, callback) {
-  var uploads;
+const lookUpVideos = function (channelID, callback) {
   axios.get('https://www.googleapis.com/youtube/v3/channels',
   {params: {
     key: keys.YT_API_KEY,
@@ -11,24 +10,25 @@ var lookUpVideos = function (channelID, callback) {
     }
   })
   .then(results => {
-    uploads = results.data.items[0].contentDetails.relatedPlaylists.uploads;
+    let uploads = results.data.items[0].contentDetails.relatedPlaylists.uploads;
     axios.get('https://www.googleapis.com/youtube/v3/playlistItems',
     {
       params: {
         key: keys.YT_API_KEY,
         part: 'snippet',
         maxResults: 10,
-        playlistId: results.data.items[0].contentDetails.relatedPlaylists.uploads
+        playlistId: uploads
       }
     })
     .then(results => {
-      let resultsArray = [];
+      let videoArray = [];
       for(let i = 0; i < results.data.items.length; i++) {
-        results.data.items[i].percent = "0%"
-        results.data.items[i].done = false;
-        resultsArray.push(results.data.items[i]);
+        let video = JSON.parse(JSON.stringify(results.data.items[i]))
+        video.percent = "0%"
+        video.done = false;
+        videoArray.push(video);
       }
-      callback(resultsArray, uploads);
+      callback(videoArray, uploads);
     })
   })
 }

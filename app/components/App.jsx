@@ -1,10 +1,10 @@
-var React = require('react');
-var ReactDOM = require('react-dom');
+const React = require('react');
+const ReactDOM = require('react-dom');
 const axios = require('axios');
-var ytHelper = require('../utils/youtubeHelper.js')
+const ytHelper = require('../utils/youtubeHelper.js')
 
-var Header = require('./Header.jsx');
-var VideoList = require('./VideoList.jsx');
+const Header = require('./Header.jsx');
+const VideoList = require('./VideoList.jsx');
 
 class App extends React.Component {
   constructor(props){
