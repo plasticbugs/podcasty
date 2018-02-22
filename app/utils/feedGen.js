@@ -19,7 +19,7 @@ const buildRSS = (payload, responseData) => {
       }}
     ]
   })
-  feed.__proto__.addItemToFeed = function(snippet) {
+  feed.addItemToFeed = function(snippet) {
     this.item({
       title: snippet.title,
       description: snippet.description,
