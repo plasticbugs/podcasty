@@ -1,78 +1,71 @@
 var RSS = require('rss');
-var najax = require('najax');
+const axios = require('axios');
 var keys = require('../../config.js');
 
-var generateRSS = function(channelName, uploads, callback){
-  var theData = {};
-  var feed;
-  najax({
-    url: 'https://www.googleapis.com/youtube/v3/channels',
-    method: 'GET',
-    data: {
-      key: keys.YT_API_KEY,
-      part: 'snippet',
-      forUsername: channelName
+const buildRSS = (payload, responseData) => {
+  return new RSS({
+    title: responseData.title,
+    description: responseData.description,
+    feed_url: "http://127.0.0.1:3000/feed?uploads=" + payload.uploads + "&channel=" + payload.channel,
+    site_url: 'http://www.youtube.com/c/' + responseData.customUrl,
+    image_url: responseData.thumbnails.high.url,
+    custom_namespaces: {
+      'itunes': 'http://www.itunes.com/dtds/podcast-1.0.dtd'
     },
-    success: function(data){
-      data = JSON.parse(data);
-      data = data.items[0].snippet;
-      theData.title = data.title;
-      theData.description = data.description;
-      theData.url = 'http://www.youtube.com/c/' + data.customUrl;
-      theData.image = data.thumbnails.high.url;
-      najax({
-        url: 'https://www.googleapis.com/youtube/v3/playlistItems',
-        method: 'GET',
-        data: {
+    custom_elements: [
+      {'itunes:summary': responseData.description},
+      {'itunes:image': {
+        _attr: { href: responseData.image }
+      }}
+    ]
+  })
+}
+
+const addItemToFeed = (feed, snippet) => {
+  feed.item({
+    title: snippet.title,
+    description: snippet.description,
+    date: snippet.publishedAt,
+    enclosure: {url:'http://127.0.0.1:3000/bitbucket/' + snippet.resourceId.videoId + ".mp3"},
+    custom_elements: [
+      {'itunes:image': {
+        _attr: {
+          href: snippet.thumbnails.medium.url
+        }
+      }}
+    ]
+  })
+}
+
+const generateRSS = (payload, callback) => {
+  axios.get(
+    'https://www.googleapis.com/youtube/v3/channels',
+    {
+      params: {
+        key: keys.YT_API_KEY,
+        part: 'snippet',
+        forUsername: payload.channel
+      }
+    })
+    .then(response => {
+      let data = response.data.items[0].snippet;
+      let feed = buildRSS(payload, data);
+
+      axios.get('https://www.googleapis.com/youtube/v3/playlistItems', {
+        params: {
           key: keys.YT_API_KEY,
           part: 'snippet',
           maxResults: 10,
-          playlistId: uploads
-        },
-        success: function(data){
-          data = JSON.parse(data);
-          var resultsArray = [];
-          for(var i = 0; i < data.items.length; i++) {
-            resultsArray.push(data.items[i]);
-          }
-          theData.videos = resultsArray;
-          feed = new RSS({
-            title: theData.title,
-            description: theData.description,
-            feed_url: "http://127.0.0.1:3000/feed?uploads=" + uploads + "&channel=" + channelName,
-            site_url: theData.url,
-            image_url: theData.image,
-            custom_namespaces: {
-              'itunes': 'http://www.itunes.com/dtds/podcast-1.0.dtd'
-            },
-            custom_elements: [
-              {'itunes:summary': theData.description},
-              {'itunes:image': {
-                _attr: { href: theData.image }
-              }}
-            ]
-          });
-          theData.videos.forEach(function(video){
-            var snippet = video.snippet;
-            feed.item({
-              title: snippet.title,
-              description: snippet.description,
-              date: snippet.publishedAt,
-              enclosure: {url:'http://127.0.0.1:3000/bitbucket/' + snippet.resourceId.videoId + ".mp3"},
-              custom_elements: [
-                {'itunes:image': {
-                  _attr: {
-                    href: snippet.thumbnails.medium.url
-                  }
-                }}
-              ]
-            })
-          })
-          callback(feed.xml());
+          playlistId: payload.uploads
         }
       })
-    }
-  });
-}
+      .then( response => {
+        response.data.items.forEach( video => {
+          addItemToFeed(feed, video.snippet);
+        })
+        callback(feed.xml());
+      })
+    })
+  }
 
 exports.generateRSS = generateRSS;
