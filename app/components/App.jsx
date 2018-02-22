@@ -12,8 +12,27 @@ class App extends React.Component {
     this.state = {
       videoList: this.props.theList,
       channel: this.props.channel,
-      uploads: null
+      uploads: null,
+      polling: false
     }
+    this.pollServerForUpdates = this.pollServerForUpdates.bind(this);
+  }
+  
+  pollServerForUpdates() {
+    axios.get('/api?channel=' + this.props.channel)
+    .then(results => {
+      let data = results.data;
+      for(let i = 0; i < this.state.videoList.length; i++){
+        for (let j = 0; j < data.videos.length; j++) {
+          if(this.state.videoList[i].snippet.resourceId.videoId === data.videos[j].id) {
+            let listCopy = this.state.videoList.slice();
+            listCopy[i].percent = data.videos[j].percent;
+            listCopy[i].done = data.videos[j].done;
+            this.setState({videoList: listCopy});
+          }
+        }
+      }
+    })
   }
 
   componentDidMount() {
@@ -27,24 +46,14 @@ class App extends React.Component {
     .catch(err => {
       console.log("Error posting data: ", err)
     })
-
-//    Every 10 seconds, poll the server and check to see the upload switch
-    setInterval(function(){
-      axios.get('/api?channel=' + this.props.channel)
-      .then(results => {
-        let data = results.data;
-        for(var i = 0; i < this.state.videoList.length; i++){
-          for (var j = 0; j < data.videos.length; j++) {
-            if(this.state.videoList[i].snippet.resourceId.videoId === data.videos[j].id) {
-              let listCopy = this.state.videoList.slice();
-              listCopy[i].percent = data.videos[j].percent;
-              listCopy[i].done = data.videos[j].done;
-              this.setState({videoList: listCopy});
-            }
-          }
-        }
+    if (!this.state.polling) {
+      this.setState({polling: true}, () => {
+        this.pollServerForUpdates();
+        setInterval( () => {
+          this.pollServerForUpdates()
+        }, 5000)
       })
-    }.bind(this), 200);
+    }
   }
 
   render() {
@@ -58,7 +67,6 @@ class App extends React.Component {
 }
 
 
-ytHelper.lookUp(window.location.pathname.substring(1), function(data, uploads){
-
+ytHelper.lookUp(window.location.pathname.substring(1), (data, uploads) => {
   ReactDOM.render(<App channel={window.location.pathname.substring(1)} theList={data} uploads={uploads}/>, document.getElementById('app'));
 });
