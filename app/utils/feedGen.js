@@ -3,7 +3,7 @@ const axios = require('axios');
 const keys = require('../../config.js');
 
 const buildRSS = (payload, responseData) => {
-  return new RSS({
+  let feed = new RSS({
     title: responseData.title,
     description: responseData.description,
     feed_url: "http://127.0.0.1:3000/feed?uploads=" + payload.uploads + "&channel=" + payload.channel,
@@ -19,22 +19,22 @@ const buildRSS = (payload, responseData) => {
       }}
     ]
   })
-}
-
-const addItemToFeed = (feed, snippet) => {
-  feed.item({
-    title: snippet.title,
-    description: snippet.description,
-    date: snippet.publishedAt,
-    enclosure: {url:'http://127.0.0.1:3000/bitbucket/' + snippet.resourceId.videoId + ".mp3"},
-    custom_elements: [
-      {'itunes:image': {
-        _attr: {
-          href: snippet.thumbnails.medium.url
-        }
-      }}
-    ]
-  })
+  feed.__proto__.addItemToFeed = function(snippet) {
+    this.item({
+      title: snippet.title,
+      description: snippet.description,
+      date: snippet.publishedAt,
+      enclosure: {url:'http://127.0.0.1:3000/bitbucket/' + snippet.resourceId.videoId + ".mp3"},
+      custom_elements: [
+        {'itunes:image': {
+          _attr: {
+            href: snippet.thumbnails.medium.url
+          }
+        }}
+      ]
+    })
+  }
+  return feed;
 }
 
 const generateRSS = (payload, callback) => {
@@ -61,7 +61,7 @@ const generateRSS = (payload, callback) => {
       })
       .then( response => {
         response.data.items.forEach( video => {
-          addItemToFeed(feed, video.snippet);
+          feed.addItemToFeed(video.snippet);
         })
         callback(feed.xml());
       })
