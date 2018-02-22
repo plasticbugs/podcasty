@@ -104,8 +104,7 @@ app.get('/feed',cache.route(), function(request, response) {
   var channel = request.query.channel;
   console.log('channel & uploads', uploads, channel);
   response.contentType('text/xml')
-  rss.generateRSS(channel,uploads, function(rssData) {
-    console.log("doing fresh")
+  rss.generateRSS({channel, uploads}, (rssData) => {
     response.send(rssData);
   });
 })
