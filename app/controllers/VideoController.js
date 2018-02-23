@@ -8,10 +8,11 @@ module.exports.saveVideos = (req, res) => {
   let channel = req.body.channel;
   res.send(200);
 
-  const recurse = (array) => {
+  (function recurse(array) {
     if (array.length) {
       let item = array.shift();
       let id = item.snippet.resourceId.videoId;
+
       Video.findOne({videoid: id}, (err, savedVideo) => {
         if (!savedVideo) {
           let newVideo = new Video({percent: "0%", videoid: id, done: false, channel});
@@ -46,7 +47,6 @@ module.exports.saveVideos = (req, res) => {
             });
           });
         } else if (savedVideo.percent !== '100%') {
-          console.log("hey, not done yet", savedVideo)
           Video.remove({_id: savedVideo._id}, err => {
             if (err) {
               throw err;
@@ -55,17 +55,12 @@ module.exports.saveVideos = (req, res) => {
               recurse(array);
             }
           })
-          // savedVideo.remove();
-          // console.log(savedVideo.d)
         } else {
-          console.log("this one I got", savedVideo)
-          array.shift();
           recurse(array)
         } 
       })
     }
-  }
-  recurse(videolist)
+  })(videolist)
 }
 
 module.exports.retrieveVideos = (req, res) => {
