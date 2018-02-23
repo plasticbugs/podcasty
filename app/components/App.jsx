@@ -10,8 +10,7 @@ class App extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      videoList: this.props.theList,
-      channel: this.props.channel,
+      videos: this.props.theList,
       uploads: null,
       polling: false
     }
@@ -22,13 +21,13 @@ class App extends React.Component {
     axios.get('/api?channel=' + this.props.channel)
     .then(results => {
       let data = results.data;
-      for(let i = 0; i < this.state.videoList.length; i++){
+      for(let i = 0; i < this.state.videos.length; i++){
         for (let j = 0; j < data.videos.length; j++) {
-          if(this.state.videoList[i].snippet.resourceId.videoId === data.videos[j].id) {
-            let listCopy = this.state.videoList.slice();
+          if(this.state.videos[i].snippet.resourceId.videoId === data.videos[j].id) {
+            let listCopy = this.state.videos.slice();
             listCopy[i].percent = data.videos[j].percent;
             listCopy[i].done = data.videos[j].done;
-            this.setState({videoList: listCopy});
+            this.setState({videos: listCopy});
           }
         }
       }
