@@ -58,8 +58,11 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header channel={this.props.channel} uploads={this.props.uploads} />
-        <VideoList videos={this.props.theList} channel={this.props.channel} />
+        <VideoList
+          uploads={this.props.uploads}
+          videos={this.props.theList}
+          channel={this.props.channel}
+        />
       </div>
     )
   }

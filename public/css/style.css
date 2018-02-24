@@ -10,8 +10,8 @@
   letter-spacing: -2px;
   padding: 15px 20px 20px 20px;
   font-size: 3em;
-  margin-bottom: -20px;
   background-color: #E91E63;
+  text-align: center;
 }
 
 a {
@@ -27,12 +27,11 @@ li {
 }
 
 body {
-  background-color: #FFFAF1;
+  background-color: #E91E63;
 }
 
 .channel-title {
-  margin: 30px 20px 15px 20px;
-  padding-bottom: 0px;
+  padding: 10px;
   font-size: 3em;
   letter-spacing: -2px;
 }
@@ -40,16 +39,16 @@ body {
 .video-list {
   color: #232323;
   font-family: 'Roboto Slab', serif;
-  margin-left: 20px;
   width: 80%;
+  margin: auto;
+  background-color: #e8e8e8;
+  padding-bottom: 1px;
 }
 
 .vid-entry {
-  border-top: solid 1px #e2e2e2;
-  border-left: solid 1px #e2e2e2;
-  border-right: solid 1px #e2e2e2;
   padding: 10px;
   background: #fdfdfe;
+  margin: 9px;
 }
 
 .vid-entry:last-child {
