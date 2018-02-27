@@ -1,6 +1,6 @@
-var app = require('./server-config');
-var port = 3000;
+const app = require('./server-config');
+const PORT = process.env.PORT || 3000;
 
-app.listen(port);
+app.listen(PORT);
 
-console.log('Serving up fresh HTML on port ', port);
+console.log('Serving up fresh HTML on port ', PORT);
