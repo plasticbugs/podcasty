@@ -1,6 +1,6 @@
 .title {
   font-family: 'Roboto Slab', sans-serif;
-  font-size: .8em;
+  font-size: 1em;
   padding-bottom: 10px;
 }
 
@@ -9,7 +9,7 @@
   font-family: 'Poppins', sans-serif;
   letter-spacing: -2px;
   padding: 15px 20px 20px 20px;
-  font-size: 3em;
+  font-size: 2em;
   background-color: #E91E63;
   text-align: center;
 }
@@ -32,8 +32,9 @@ body {
 
 .channel-title {
   padding: 10px;
-  font-size: 3em;
+  font-size: 1.8em;
   letter-spacing: -2px;
+  color: #e2e2e2;
 }
 
 .video-list {
@@ -41,14 +42,15 @@ body {
   font-family: 'Roboto Slab', serif;
   width: 80%;
   margin: auto;
-  background-color: #e8e8e8;
+  background-color: #1d1d20;
   padding-bottom: 1px;
+  border-radius: 5px;
 }
 
 .vid-entry {
   padding: 10px;
   background: #fdfdfe;
-  margin: 9px;
+  margin-bottom: 2px;
 }
 
 .vid-entry:last-child {
@@ -119,5 +121,5 @@ body {
 }
 
 .video-title {
-  font-size: .9em;
+  font-size: 1em;
 }

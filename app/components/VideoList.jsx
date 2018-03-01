@@ -109,13 +109,13 @@ class VideoList extends React.Component {
     let channel = this.getChannel();
     return (
       <div className="video-list">
-        <Header channel uploads={this.props.uploads} />
+        <Header channel={channel} uploads={this.state.uploads} />
         {this.state.videos.map( function(video) {
           return (
             <VideoEntry
               video={video}
               key={video.snippet.resourceId.videoId}
-              channel
+              channel={channel}
             />
           );
         })}
