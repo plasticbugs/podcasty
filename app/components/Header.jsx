@@ -1,7 +1,6 @@
 const React = require('react');
 const Header = (props) => (
   <div className="title">
-    {console.log("header", props)}
     <h1 className="channel-title ">{props.channel}</h1>
     <a 
       className="feed" 

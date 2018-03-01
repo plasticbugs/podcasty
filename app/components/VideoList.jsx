@@ -24,7 +24,6 @@ class VideoList extends React.Component {
   
 
   getLatestVideos(channelID, callback) {
-    console.log(channelID, keys)
     axios.get('https://www.googleapis.com/youtube/v3/channels',
     {params: {
       key: keys.YT_API_KEY,
@@ -99,7 +98,6 @@ class VideoList extends React.Component {
     let channel = this.getChannel()
     this.getLatestVideos(channel, (videos, uploads) => {
       this.setState({videos, uploads}, () => {
-        console.log(this.state)
         this.startPolling(videos, channel)
       });
     })
