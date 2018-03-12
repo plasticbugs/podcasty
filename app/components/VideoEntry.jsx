@@ -3,7 +3,7 @@ var Percent = require('./Percent.jsx')
 var DownloadButton = require('./DownloadButton.jsx');
 
 const VideoEntry = (props) => {
-  let downloadOrPercent = props.video.percent === "100%" ? <DownloadButton link={props.video.snippet.resourceId.videoId} channel={props.channel} /> : <Percent total={props.video.percent} />;
+  let downloadOrPercent = props.video.done ? <DownloadButton link={props.video.snippet.resourceId.videoId} channel={props.channel} /> : <Percent total={props.video.percent} />;
   return (
     <div className="vid-entry">
       {downloadOrPercent}

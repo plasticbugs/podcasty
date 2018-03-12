@@ -1,7 +1,9 @@
 import React from 'react';
 import axios from 'axios';
+// import io from 'socket.io';
+// import keys from '../../config';
+import io from 'socket.io-client';
 
-import keys from '../../config';
 import VideoEntry from './VideoEntry.jsx';
 import Header from './Header.jsx';
 
@@ -23,34 +25,18 @@ class VideoList extends React.Component {
   }
   
 
-  getLatestVideos(channelID, callback) {
-    axios.get('https://www.googleapis.com/youtube/v3/channels',
-    {params: {
-      key: keys.YT_API_KEY,
-      part: 'contentDetails',
-      forUsername: channelID 
-      }
-    })
-    .then(results => {
-      let uploads = results.data.items[0].contentDetails.relatedPlaylists.uploads;
-      axios.get('https://www.googleapis.com/youtube/v3/playlistItems',
-      {
+  getLatestVideos(channelID) {
+    return new Promise( (resolve, reject) => {
+      axios.get('/api', {
         params: {
-          key: keys.YT_API_KEY,
-          part: 'snippet',
-          maxResults: 10,
-          playlistId: uploads
+          channel: channelID
         }
       })
       .then(results => {
-        let videoArray = [];
-        for(let i = 0; i < results.data.items.length; i++) {
-          let video = JSON.parse(JSON.stringify(results.data.items[i]))
-          video.percent = "0%"
-          video.done = false;
-          videoArray.push(video);
-        }
-        callback(videoArray, uploads);
+        resolve({videos: results.data.videos, uploads: results.data.uploads})
+      })
+      .catch(err => {
+        reject(err);
       })
     })
   }
@@ -96,11 +82,20 @@ class VideoList extends React.Component {
 
   componentDidMount() {
     let channel = this.getChannel()
-    this.getLatestVideos(channel, (videos, uploads) => {
-      this.setState({videos, uploads}, () => {
-        this.startPolling(videos, channel)
-      });
+    io('http://localhost:3001', {
+      path: `/${channel}`
     })
+    .on('connection', socket => {
+      socket.on('hello', msg => {
+        console.log('server said: ', msg)
+      })
+    })
+    this.getLatestVideos(channel)
+    .then(results => {
+      this.setState(results, () => {
+        console.log(this.state.videos)
+      });
+    });
   }
   
   render() {

@@ -16,7 +16,7 @@ app.use(express.static('public'));
 app.use(bodyParser.json()); // for parsing application/json
 
 
-app.post('/api', VideoController.saveVideos);
+// app.post('/api', VideoController.saveVideos);
 app.get('/api', VideoController.retrieveVideos);
 
 app.get('/feed',cache.route(), function(request, response) {

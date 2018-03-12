@@ -10,4 +10,8 @@ var videoSchema = new Schema({
   channel: String
 });
 
-module.exports = mongoose.model('Video', videoSchema);
+const Video = mongoose.model('Video', videoSchema);
+
+Video.find({done: false}).remove().exec();
+
+export default Video;
