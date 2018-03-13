@@ -16,6 +16,7 @@ module.exports.queueDownloads = (videos, downloadQueue) => {
   // });
   const socket = require('../../server').socket;
   const io = require('../../server').io;
+
   let optionsHash = {};
   console.log(videos.length)
   videos.forEach( video => {
@@ -26,10 +27,11 @@ module.exports.queueDownloads = (videos, downloadQueue) => {
       videoid: video.videoid,
       progress: function(data) { // Progress reporter callback...
         // console.log(data.percent, socket.id)
+        let room = socket.handshake.query.token;
         // console.log(video.channel.toLowerCase());
         // socket.emit('message', data.percent);
         // socket.broadcast.to(video.channel).emit('message', data.percent);
-        io.to(socket.handshake.query.token).emit('message', data.percent);
+        io.to(room).emit('message', {percent: data.percent, video: video.videoid});
         // module.exports.io = Server;
         // socketController.connection(socket, io)
         
