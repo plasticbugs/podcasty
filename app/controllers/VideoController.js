@@ -75,83 +75,10 @@ const findOrCreateVideos = (videoList) => {
   })
 }
 
-// module.exports.joinRoom = (socket) => {
-//   socket.
-// }
- 
-// module.exports.saveVideos = (req, res) => {
-//   let videolist = req.body.videos;
-//   let channel = req.body.channel;
-//   res.send(200);
-
-//   (function recurse(array) {
-//     if (array.length) {
-//       let item = array.shift();
-//       let id = item.snippet.resourceId.videoId;
-
-      
-//             let pullyOptions = {
-//               dir: './public/bitbucket',
-//               template: '${id}',
-//               preset: Presets.MP3,
-//               progress: function(data) { // Progress reporter callback...
-//                 newVideo.percent = data.percent + '%';
-//                 newVideo.save();
-//                 console.log(data.percent + '%')
-//               },
-//               path: path.resolve(__dirname, './') 
-//             };
-//             pullyOptions.url = 'http://www.youtube.com/watch?v=' + id;
-//             pully.download(pullyOptions).then(
-//               place => {
-//                 console.log('Downloaded to ' + place.path);
-//                },
-//                err => {
-//                  throw err;
-//                }
-//             )
-//             .then( () => {
-//               newVideo.done = true;
-//               newVideo.save();
-//               recurse(array)
-//             });
-//           });
-//         } else if (savedVideo.percent !== '100%') {
-//           Video.remove({_id: savedVideo._id}, err => {
-//             if (err) {
-//               throw err;
-//             } else {
-//               array.unshift(item);
-//               recurse(array);
-//             }
-//           })
-//         } else {
-//           recurse(array)
-//         } 
-//       })
-//     }
-//   })(videolist)
-// }
-
 module.exports.retrieveVideos = (req, res) => {
   var channel = req.query.channel;
   getVideosAndUploadsID(channel)
   .then(results => {
     res.send(results)
   })
-  // var responseObject = {videos:[]};
-  // let  = [];
-  // // get all the videos with this channel out of the DB:
-  // Video.find({channel}, (err, videos) => {
-  //   videos.forEach( video => {
-  //     let videoObj = {
-  //       id: video.videoid,
-  //       percent: video.percent,
-  //       done: video.done,
-  //       link: video.link
-  //     };
-  //     responseObject.videos.push(videoObj);
-  //   })
-  //   res.json(responseObject);
-  // })
 }

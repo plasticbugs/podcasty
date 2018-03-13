@@ -13,12 +13,7 @@ io.on('connection', socket => {
   let channel = socket.handshake.query.token
   console.log('connection');
   socket.join(channel);
-  socket.broadcast.to(channel).emit('message', 'you are in');
-  
-  module.exports.io = io;
-  // socketController.connection(socket, io);
-  socket.emit('message', 'you are in')
-  module.exports.socket = socket;
-})
 
-// module.exports.Server = Server;
+  module.exports.io = io;
+  module.exports.socket = socket;
+});
