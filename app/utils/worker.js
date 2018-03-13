@@ -1,17 +1,21 @@
 const { Pully, Presets } = require('pully')
 const path = require('path');
 
+// const io = require('../../server').io;
 // const server = require('http').createServer();
-const io = require('socket.io').listen(3001);
-io.set( 'origins', 'http://localhost:*' );
+
 let pully = new Pully();
 
 module.exports.queueDownloads = (videos, downloadQueue) => {
-  io.of(`/${videos[0].channel}`)
-  .on('connection', function(socket){
-    console.log('someone connected');
-    socket.emit('hello', 'yo dawg!')
-  });
+  // console.log(Server.socket.id)
+  // console.log(`/websocket/${videos[0].channel.toLowerCase()}`)
+  // io.of(`/websocket`)
+  // .on('connection', function(socket){
+  //   console.log('someone connected');
+  //   socket.emit('hello', 'yo dawg!')
+  // });
+  const socket = require('../../server').socket;
+  const io = require('../../server').io;
   let optionsHash = {};
   console.log(videos.length)
   videos.forEach( video => {
@@ -21,7 +25,22 @@ module.exports.queueDownloads = (videos, downloadQueue) => {
       preset: Presets.MP3,
       videoid: video.videoid,
       progress: function(data) { // Progress reporter callback...
-        console.log(data.percent)
+        // console.log(data.percent, socket.id)
+        // console.log(video.channel.toLowerCase());
+        // socket.emit('message', data.percent);
+        // socket.broadcast.to(video.channel).emit('message', data.percent);
+        io.to(socket.handshake.query.token).emit('message', data.percent);
+        // module.exports.io = Server;
+        // socketController.connection(socket, io)
+        
+        
+        // socket.emit('message', data.percent);
+        // socket.broadcast.to(video.channel.toLowerCase()).emit('message', data.percent);
+
+
+
+        // io.sockets.in(video.channel)
+        // .emit('message', data.percent);
         // video.percent = data.percent;
         // video.save();
         // console.log(data.percent + '%')

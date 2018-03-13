@@ -4,6 +4,7 @@ const keys = require('../../config');
 const axios = require('axios');
 const Q = require('bee-queue');
 const qHelper = require('../utils/worker');
+// const socketController = require('../controllers/SocketController');
 
 const getVideosAndUploadsID = (channelID) => {
   return new Promise( (resolve, reject) => {
@@ -74,6 +75,9 @@ const findOrCreateVideos = (videoList) => {
   })
 }
 
+// module.exports.joinRoom = (socket) => {
+//   socket.
+// }
  
 // module.exports.saveVideos = (req, res) => {
 //   let videolist = req.body.videos;
@@ -131,7 +135,6 @@ const findOrCreateVideos = (videoList) => {
 
 module.exports.retrieveVideos = (req, res) => {
   var channel = req.query.channel;
-  console.log(channel)
   getVideosAndUploadsID(channel)
   .then(results => {
     res.send(results)

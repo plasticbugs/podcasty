@@ -15,8 +15,8 @@ class VideoList extends React.Component {
       uploads: null,
       polling: false,
     }
-    this.pollServerForUpdates = this.pollServerForUpdates.bind(this);
-    this.startPolling = this.startPolling.bind(this);
+    // this.pollServerForUpdates = this.pollServerForUpdates.bind(this);
+    // this.startPolling = this.startPolling.bind(this);
     this.getChannel = this.getChannel.bind(this);
   }
 
@@ -41,55 +41,55 @@ class VideoList extends React.Component {
     })
   }
 
-  pollServerForUpdates(channel) {
-    axios.get('/api?channel=' + channel)
-    .then(results => {
-      let data = results.data;
-      for(let i = 0; i < this.state.videos.length; i++){
-        for (let j = 0; j < data.videos.length; j++) {
-          if(this.state.videos[i].snippet.resourceId.videoId === data.videos[j].id) {
-            let listCopy = this.state.videos.slice();
-            listCopy[i].percent = data.videos[j].percent;
-            listCopy[i].done = data.videos[j].done;
-            this.setState({videos: listCopy});
-          }
-        }
-      }
-    })
-  }
+  // pollServerForUpdates(channel) {
+  //   axios.get('/api?channel=' + channel)
+  //   .then(results => {
+  //     let data = results.data;
+  //     for(let i = 0; i < this.state.videos.length; i++){
+  //       for (let j = 0; j < data.videos.length; j++) {
+  //         if(this.state.videos[i].snippet.resourceId.videoId === data.videos[j].id) {
+  //           let listCopy = this.state.videos.slice();
+  //           listCopy[i].percent = data.videos[j].percent;
+  //           listCopy[i].done = data.videos[j].done;
+  //           this.setState({videos: listCopy});
+  //         }
+  //       }
+  //     }
+  //   })
+  // }
 
-  startPolling(videos, channel) {
-    let payload = {
-      videos,
-      channel
-    };
-    axios.post('/api?channel=' + channel, payload)
-    .then(success => {
-      console.log("Successful POST")
-    })
-    .catch(err => {
-      console.log("Error posting data: ", err)
-    })
-    if (!this.state.polling) {
-      this.setState({polling: true}, () => {
-        this.pollServerForUpdates(channel);
-        setInterval( () => {
-          this.pollServerForUpdates(channel)
-        }, 5000)
-      })
-    }
-  }
+  // startPolling(videos, channel) {
+  //   let payload = {
+  //     videos,
+  //     channel
+  //   };
+  //   axios.post('/api?channel=' + channel, payload)
+  //   .then(success => {
+  //     console.log("Successful POST")
+  //   })
+  //   .catch(err => {
+  //     console.log("Error posting data: ", err)
+  //   })
+  //   if (!this.state.polling) {
+  //     this.setState({polling: true}, () => {
+  //       this.pollServerForUpdates(channel);
+  //       setInterval( () => {
+  //         this.pollServerForUpdates(channel)
+  //       }, 5000)
+  //     })
+  //   }
+  // }
 
   componentDidMount() {
     let channel = this.getChannel()
-    io('http://localhost:3001', {
-      path: `/${channel}`
+    io({query:{token: channel}})
+    .on('message', payload => {
+      console.log(payload)
+      // socket.on('hello', msg => {
+      //   console.log('server said: ', msg)
+      // })
     })
-    .on('connection', socket => {
-      socket.on('hello', msg => {
-        console.log('server said: ', msg)
-      })
-    })
+    
     this.getLatestVideos(channel)
     .then(results => {
       this.setState(results, () => {

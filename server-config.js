@@ -29,8 +29,13 @@ app.get('/feed',cache.route(), function(request, response) {
   });
 })
 
-app.get('/*', function(request, response) {
-  response.sendFile(path.resolve(__dirname, './public/index.html'));
+// app.get('/*', function(request, response) {
+//   response.sendFile(path.resolve(__dirname, './public/index.html'));
+// });
+
+app.get(/^.(?![socket.io]).*$/, (req, res) => {
+  res.sendFile(path.resolve(__dirname, './public/index.html'));
 });
+
 
 module.exports = app;
