@@ -87,10 +87,11 @@ body {
 .percent {
   background-color: #03A9F4;
   padding: 2px 4px 3px 4px;
+  width: 80px;
   font-size: 1em;
   float: right;
   margin-left: 10px;
-
+  text-align: right;
   color: white;
   background-color: #ff16cf;
 } 
