@@ -12,12 +12,12 @@ const db = require('./db/config.js');
 
 const app = express();
 
-app.use(express.static('public'));
+app.use(express.static('dist/public'));
 app.use(bodyParser.json()); // for parsing application/json
 
 app.get('/api', VideoController.retrieveVideos);
 
-app.get('/feed',cache.route(), function(request, response) {
+app.get('/feed', cache.route(), function(request, response) {
   var uploads = request.query.uploads;
   var channel = request.query.channel;
   console.log('channel & uploads', uploads, channel);
@@ -28,7 +28,7 @@ app.get('/feed',cache.route(), function(request, response) {
 })
 
 app.get('/*', function(request, response) {
-  response.sendFile(path.resolve(__dirname, './public/index.html'));
+  response.sendFile(path.resolve(__dirname, 'dist/public/index.html'));
 });
 
 // app.get(/^.(?![socket.io]).*$/, (req, res) => {
