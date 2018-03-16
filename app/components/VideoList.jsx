@@ -3,6 +3,7 @@ import axios from 'axios';
 // import io from 'socket.io';
 // import keys from '../../config';
 import io from 'socket.io-client';
+import { Container, Item } from 'semantic-ui-react';
 
 import VideoEntry from './VideoEntry.jsx';
 import Header from './Header.jsx';
@@ -25,6 +26,7 @@ class VideoList extends React.Component {
   
 
   componentDidMount() {
+    console.log('mount fired')
     let channel = this.getChannel()
     io({query:{token: channel}})
     .on('message', payload => {
@@ -37,8 +39,9 @@ class VideoList extends React.Component {
     
     this.getLatestVideos(channel)
     .then(results => {
+      console.log('initial fetch from server', results)
       this.setState(results, () => {
-        console.log(this.state.videos)
+        // console.log(this.state.videos)
       });
     });
   }
@@ -46,6 +49,7 @@ class VideoList extends React.Component {
   handleUpdatedProgress(payload) {
     let updatedVideos = this.state.videos.map(video => {
       if (video.snippet.resourceId.videoId === payload.video) {
+        console.log('video from updated progress: ', video)
         return Object.assign({}, video, {percent: payload.percent})
       } else {
         return video;
@@ -73,17 +77,21 @@ class VideoList extends React.Component {
   render() {
     let channel = this.getChannel();
     return (
-      <div className="video-list">
-        <Header channel={channel} uploads={this.state.uploads} />
-        {this.state.videos.map( function(video) {
-          return (
-            <VideoEntry
-              video={video}
-              key={video.snippet.resourceId.videoId}
-              channel={channel}
-            />
-          );
-        })}
+      <div>
+        <Container style={{ marginTop: '7em' }}>
+          <Header channel={channel} uploads={this.state.uploads} />
+          <Item.Group divided>
+            {this.state.videos.map( function(video) {
+              return (
+                <VideoEntry
+                  video={video}
+                  key={video.snippet.resourceId.videoId}
+                  channel={channel}
+                />
+              );
+            })}
+          </Item.Group>
+        </Container>
       </div>
     )
   }
