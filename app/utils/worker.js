@@ -11,7 +11,7 @@ module.exports.queueDownloads = (videos, downloadQueue) => {
   console.log(videos.length)
   videos.forEach( video => {
     let pullyOptions = {
-      dir: './public/bitbucket',
+      dir: 'dist/public/bitbucket',
       template: '${id}',
       preset: Presets.MP3,
       videoid: video.videoid,
