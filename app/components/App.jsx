@@ -1,10 +1,9 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-const axios = require('axios');
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import 'semantic-ui-css/semantic.min.css';
 
-const ytHelper = require('../utils/youtubeHelper.js');
-const VideoList = require('./VideoList.jsx');
+import MainLayout from './MainLayout.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -15,7 +14,7 @@ class App extends React.Component {
     return (
       <BrowserRouter>
         <Switch>
-          <Route path='/:channel' render={(props) => <VideoList {...props} />} />
+          <Route path='/:channel' render={(props) => <MainLayout {...props} />} />
         </Switch>
       </BrowserRouter>
     )
