@@ -27,7 +27,11 @@ const getVideosAndUploadsID = (channelID) => {
         }
       })
       .then(results => {
-        findOrCreateVideos(results.data.items)
+        let videos = results.data.items;
+        videos.sort((a,b) => {
+          return new Date(b.snippet.publishedAt) - new Date(a.snippet.publishedAt);
+        })
+        findOrCreateVideos(videos)
         .then(videos => {
           resolve({videos, uploads})
         })
