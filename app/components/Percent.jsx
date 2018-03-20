@@ -28,7 +28,7 @@ export default class Percent extends Component {
   renderDownloadButton() {
     return (
       <Transition visible={true} transitionOnMount={true} animation='fade' duration={500}>
-        <Button onClick={()=>{window.location.href = `bitbucket/${this.props.video.snippet.resourceId.videoId}.mp3`}} size="small">Download Audio</Button>
+        <Button onClick={()=>{window.location.href = `bitbucket/${this.props.video.snippet.resourceId.videoId}.mp3`}} floated='right' size="small">Download Audio</Button>
       </Transition>
     );
   }
