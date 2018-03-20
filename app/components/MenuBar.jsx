@@ -9,9 +9,6 @@ class MenuBar extends Component {
           <Menu.Item as='a'>
             <img src='assets/pm_logo.png' width='40px' /><span style={{marginLeft: '10px'}}>Podcast Machine</span>
           </Menu.Item>
-          <Menu.Item as='a'>
-            Here's More!
-          </Menu.Item>
         </Container>
       </Menu>
     )
