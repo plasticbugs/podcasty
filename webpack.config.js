@@ -20,6 +20,7 @@ module.exports = {
       },
       {
         test:/\.(s*)css$/,
+        include: /node_modules/,
         use: extractSass.extract({
           use: [{
             // loader: 'css-loader?minimize',
@@ -31,8 +32,9 @@ module.exports = {
         })
       },
       {
-        test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-        use: ['url-loader?limit=100000']
+        test: [/\.eot$/, /\.png$/, /\.jpg$/, /\.gif$/, /\.ttf$/, /\.svg$/, /\.woff$/, /\.woff2$/],
+        loader: 'url-loader'
+        // output: './dist/public/css'
       },
     ]
   }
