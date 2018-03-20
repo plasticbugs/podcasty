@@ -15,6 +15,13 @@ const app = express();
 app.use(express.static('dist/public'));
 app.use(bodyParser.json()); // for parsing application/json
 
+app.use(function (req, res, next) {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+  next()
+});
+
 app.get('/api', VideoController.retrieveVideos);
 
 app.get('/feed', cache.route(), function(request, response) {
