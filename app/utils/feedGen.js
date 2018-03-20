@@ -15,7 +15,7 @@ const buildRSS = (payload, responseData) => {
     custom_elements: [
       {'itunes:summary': responseData.description},
       {'itunes:image': {
-        _attr: { href: responseData.image }
+        _attr: { href: responseData.thumbnails.medium.url }
       }}
     ]
   })
