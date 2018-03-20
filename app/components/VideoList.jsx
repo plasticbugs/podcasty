@@ -26,7 +26,6 @@ class VideoList extends React.Component {
   
 
   componentDidMount() {
-    console.log('mount fired')
     let channel = this.getChannel()
     io({query:{token: channel}})
     .on('message', payload => {
@@ -49,7 +48,6 @@ class VideoList extends React.Component {
   handleUpdatedProgress(payload) {
     let updatedVideos = this.state.videos.map(video => {
       if (video.snippet.resourceId.videoId === payload.video) {
-        console.log('video from updated progress: ', video)
         return Object.assign({}, video, {percent: payload.percent})
       } else {
         return video;
@@ -76,6 +74,7 @@ class VideoList extends React.Component {
   
   render() {
     let channel = this.getChannel();
+    console.log(this.state.uploads)
     return (
       <div>
         <Container style={{ marginTop: '7em' }}>
