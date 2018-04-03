@@ -1,7 +1,5 @@
 import React from 'react';
 import axios from 'axios';
-// import io from 'socket.io';
-// import keys from '../../config';
 import io from 'socket.io-client';
 import { Container, Item } from 'semantic-ui-react';
 
