@@ -40,7 +40,7 @@ export default class Percent extends Component {
 
     return contentToDisplay;
   }
-    // total = this.props.total !== "NaN%" ? this.props.total : 'loading...'
+
   render() {
     if (this.state.showDownload) {
       return (
@@ -51,37 +51,4 @@ export default class Percent extends Component {
       this.showPercentageOrDownloadButton()
     )
   }
-    // <span className="percent">{total}</span></div>
 }
-
-
-
-// const downloadOrPercent = () => {
-//   if (props.video.done) {
-//     return (
-//       <DownloadButton
-//         link={props.video.snippet.resourceId.videoId}
-//         channel={props.channel}
-//       />
-//     )
-//   } else if (props.video.percent) {
-//     if (props.video.percent === 100) {
-//       return (
-//         <DownloadButton
-//           link={props.video.snippet.resourceId.videoId}
-//           channel={props.channel}
-//         />
-//       )
-//     }
-//     let total = Math.floor(props.video.percent);
-//     return (<Percent
-//       total={total}
-//     />);
-//   } else {
-//     return (
-//       <Percent
-//         total={0}
-//       />
-//     );
-//   }
-// }

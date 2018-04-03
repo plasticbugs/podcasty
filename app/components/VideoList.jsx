@@ -30,17 +30,12 @@ class VideoList extends React.Component {
     io({query:{token: channel}})
     .on('message', payload => {
       this.handleUpdatedProgress(payload)
-      // console.log(payload)
-      // socket.on('hello', msg => {
-      //   console.log('server said: ', msg)
-      // })
     })
     
     this.getLatestVideos(channel)
     .then(results => {
       console.log('initial fetch from server', results)
       this.setState(results, () => {
-        // console.log(this.state.videos)
       });
     });
   }

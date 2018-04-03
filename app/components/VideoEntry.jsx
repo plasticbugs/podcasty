@@ -30,5 +30,3 @@ export default class VideoEntry extends Component {
     );
   }
 }
-
-// module.exports = VideoEntry;
